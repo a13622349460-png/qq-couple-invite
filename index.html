@@ -9,11 +9,58 @@
         content="和我成为情侣，让QQ帮我们记录每日点滴">
   <meta itemprop="image" property="og:image"
         content="https://a13622349460-png.github.io/qq-couple-invite/heart.png">
+  <style>
+    body {
+      min-height: 100vh;
+      margin: 0;
+      display: grid;
+      place-items: center;
+      background: #f5f5f5;
+      color: #222;
+      font: 16px/1.6 system-ui, sans-serif;
+    }
+    main {
+      width: min(86vw, 360px);
+      padding: 28px;
+      border-radius: 20px;
+      background: white;
+      box-shadow: 0 10px 30px #0001;
+      text-align: center;
+    }
+    h1 { margin: 0 0 8px; font-size: 22px; }
+    p { margin: 8px 0 20px; color: #666; }
+    a {
+      display: inline-block;
+      padding: 10px 18px;
+      border-radius: 999px;
+      background: #ff5f82;
+      color: white;
+      text-decoration: none;
+    }
+  </style>
   <script>
-    location.replace("https://hyp-webstatic.mihoyo.com/hyp-client/hyp_cn_setup_1.0.5.exe");
+    const shareMode = new URLSearchParams(location.search).get("share") === "1";
+    if (shareMode) {
+      sessionStorage.setItem("qq-share-preview", "1");
+      history.replaceState(null, "", location.pathname);
+    }
+
+    addEventListener("DOMContentLoaded", () => {
+      const preview = sessionStorage.getItem("qq-share-preview") === "1";
+      document.querySelector("#share").hidden = !preview;
+      document.querySelector("#prank").hidden = preview;
+    });
   </script>
 </head>
 <body>
-  <a href="https://hyp-webstatic.mihoyo.com/hyp-client/hyp_cn_setup_1.0.5.exe">继续打开</a>
+  <main id="share" hidden>
+    <h1>分享模式已准备好</h1>
+    <p>请点击手机 QQ 右上角菜单，选择“分享给好友”。分享出去的是下面这张卡片，不会附带网址文字。</p>
+  </main>
+  <main id="prank" hidden>
+    <h1>你被整蛊了 😂</h1>
+    <p>这是 HoYoPlay 官方启动器，不会自动下载。</p>
+    <a href="https://hyp-webstatic.mihoyo.com/hyp-client/hyp_cn_setup_1.0.5.exe">确认下载</a>
+  </main>
 </body>
 </html>
